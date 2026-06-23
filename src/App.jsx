@@ -119,6 +119,7 @@ export default function App() {
 
       <footer className="app-footer">
         <p>Semua pemrosesan berjalan di browser kamu — file tidak diunggah ke server mana pun.</p>
+        <p>© Yhoga</p>
       </footer>
     </div>
   )
