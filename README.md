@@ -1,6 +1,6 @@
 # Dashboard penjualan toko online
 
-Upload file Excel faktur penjualan, dapat dashboard yang sama seperti yang dibuat di chat: ringkasan omset/order, tren harian, komposisi platform & brand, peringkat pelanggan, dan tabel pivot harian per pelanggan penagihan. Semua proses berjalan di browser — file tidak pernah dikirim ke server mana pun.
+Upload file Excel faktur penjualan, dapat dashboard yang sama seperti yang dibuat di chat: ringkasan omset/order, tren harian, komposisi platform & brand, peringkat pelanggan, kategorisasi pelanggan penagihan (Online Underwear / Online Sport) dengan ringkasan per kategori, dan tabel pivot harian per pelanggan penagihan. Semua proses berjalan di browser — file tidak pernah dikirim ke server mana pun.
 
 ## Menjalankan di komputer sendiri
 
@@ -44,4 +44,8 @@ Baris ringkasan/total di akhir file (baris tanpa tanggal) otomatis diabaikan.
 - `src/parseData.js` — baca file Excel, bersihkan data, hitung semua agregat (pivot, ranking, breakdown platform/brand)
 - `src/App.jsx` — komponen utama yang merangkai semua bagian
 - `src/UploadZone.jsx`, `SummaryCards.jsx`, `DailyTrendChart.jsx`, `BreakdownCharts.jsx`, `RankingTable.jsx`, `PivotTable.jsx` — komponen tampilan
+- `src/CategoryAssign.jsx` — dropdown untuk menandai setiap pelanggan penagihan sebagai "Online Underwear" / "Online Sport" / tidak dikategorikan
+- `src/CategorySummary.jsx` — ringkasan omset, order, AOV per kategori, muncul otomatis begitu ada minimal satu pelanggan ditandai
 - `src/exportExcel.js` — tombol Unduh sebagai Excel untuk dapat file `.xlsx` yang sama strukturnya dengan laporan awal
+
+Catatan: kategori yang sudah ditandai disimpan sementara di state aplikasi (bukan di file), jadi akan ter-reset setiap kali upload file baru atau refresh halaman.

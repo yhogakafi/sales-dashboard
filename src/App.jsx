@@ -5,14 +5,19 @@ import DailyTrendChart from './DailyTrendChart'
 import BreakdownCharts from './BreakdownCharts'
 import RankingTable from './RankingTable'
 import PivotTable from './PivotTable'
+import CategoryAssign from './CategoryAssign'
+import CategorySummary from './CategorySummary'
+import CategoryDateDetail from './CategoryDateDetail'
 import { parseWorkbook } from './parseData'
 import { exportToExcel } from './exportExcel'
+import { buildDefaultCategories } from './defaultCategories'
 
 export default function App() {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [fileName, setFileName] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [categories, setCategories] = useState({})
 
   const handleFile = useCallback((file) => {
     setError(null)
@@ -23,6 +28,7 @@ export default function App() {
       try {
         const result = parseWorkbook(e.target.result)
         setData(result)
+        setCategories(buildDefaultCategories(result.rankedCustomers))
       } catch (err) {
         setError(err.message || 'Gagal membaca file.')
         setData(null)
@@ -36,6 +42,20 @@ export default function App() {
     }
     reader.readAsArrayBuffer(file)
   }, [])
+
+  const handleCategoryChange = useCallback((customer, category) => {
+    setCategories((prev) => {
+      const next = { ...prev }
+      if (category) {
+        next[customer] = category
+      } else {
+        delete next[customer]
+      }
+      return next
+    })
+  }, [])
+
+  const hasAnyCategory = Object.keys(categories).length > 0
 
   return (
     <div className="app-shell">
@@ -74,6 +94,22 @@ export default function App() {
           <section>
             <RankingTable data={data} />
           </section>
+
+          <section>
+            <CategoryAssign data={data} categories={categories} onChange={handleCategoryChange} />
+          </section>
+
+          {hasAnyCategory && (
+            <section>
+              <CategorySummary data={data} categories={categories} />
+            </section>
+          )}
+
+          {hasAnyCategory && (
+            <section>
+              <CategoryDateDetail data={data} categories={categories} />
+            </section>
+          )}
 
           <section>
             <PivotTable data={data} />
