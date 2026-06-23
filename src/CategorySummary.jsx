@@ -1,5 +1,6 @@
 import { formatRupiah, formatNumber } from './parseData'
 import { CATEGORY_OPTIONS, UNCATEGORIZED } from './CategoryAssign'
+import CategoryCharts from './CategoryCharts'
 
 export default function CategorySummary({ data, categories }) {
   const groups = {}
@@ -46,6 +47,8 @@ export default function CategorySummary({ data, categories }) {
           )
         })}
       </div>
+
+      <CategoryCharts data={data} categories={categories} />
 
       {CATEGORY_OPTIONS.map((key) => {
         const list = groups[key]

@@ -415,6 +415,7 @@ section { margin-bottom: 2.5rem; }
 .category-subline.muted { color: var(--ink-faint); }
 
 .category-detail { margin-top: 1rem; }
+.category-charts-grid { margin: 1.25rem 0 1.5rem; }
 
 /* --- Date x category detail table --- */
 .date-category-table th.sub {
